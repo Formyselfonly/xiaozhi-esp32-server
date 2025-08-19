@@ -5,7 +5,8 @@ from mem0 import MemoryClient
 from core.utils.util import check_model_key
 
 TAG = __name__
-
+# 禁用mem0ai的telemetry
+MEM0_TELEMETRY=False
 
 class MemoryProvider(MemoryProviderBase):
     def __init__(self, config, summary_memory=None):
