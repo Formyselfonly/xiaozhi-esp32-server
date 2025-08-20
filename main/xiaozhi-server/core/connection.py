@@ -252,9 +252,18 @@ class ConnectionHandler:
                         # 创建新事件循环（避免与主循环冲突）
                         loop = asyncio.new_event_loop()
                         asyncio.set_event_loop(loop)
-                        loop.run_until_complete(
-                            self.memory.save_memory(self.dialogue.dialogue)
-                        )
+                        
+                        # 检查是否是 mem0ai 且支持强制保存
+                        if hasattr(self.memory, 'force_save_memory'):
+                            # 使用强制保存，确保连接关闭时保存所有对话
+                            loop.run_until_complete(
+                                self.memory.force_save_memory(self.dialogue.dialogue)
+                            )
+                        else:
+                            # 使用普通保存
+                            loop.run_until_complete(
+                                self.memory.save_memory(self.dialogue.dialogue)
+                            )
                     except Exception as e:
                         self.logger.bind(tag=TAG).error(f"保存记忆失败: {e}")
                     finally:

@@ -239,6 +239,11 @@ Memory:
     # https://app.mem0.ai/dashboard/api-keys
     # 每月有1000次免费调用
     api_key: 你的mem0ai api key
+    # 批量保存配置：设置对话轮数阈值，达到阈值时才保存到 mem0ai
+    # 设置为 1：每轮对话都保存（默认行为，API调用频繁）
+    # 设置为 5：每5轮对话保存一次（推荐，平衡性能和记忆效果）
+    # 设置为 10：每10轮对话保存一次（高性能，但可能丢失部分记忆）
+    batch_size: 5
   nomem:
     # 不想使用记忆功能，可以使用nomem
     type: nomem
