@@ -242,6 +242,8 @@ Memory:
     api_key: m0-T5IC5pby1Z0ZQpqbNi7gz9IvkrdxDqxZCNgSdJ0g
     # DeepSeek API Key，用于 Mem0ai 内部 LLM
     deepseek_api_key: sk-01568d3c6e8949d18f76fc37a51344ed
+    # OpenAI API Key，用于 Mem0ai 内部 Embedder
+    openai_api_key: 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  # 请替换为你的 OpenAI API Key
     # 批量保存配置：设置对话轮数阈值，达到阈值时才保存到 mem0ai
     # 设置为 1：每轮对话都保存（默认行为，API调用频繁）
     # 设置为 5：每5轮对话保存一次（推荐，平衡性能和记忆效果）

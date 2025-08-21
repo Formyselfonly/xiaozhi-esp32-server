@@ -15,9 +15,11 @@ Memory:
   mem0ai:
     type: mem0ai
     # Mem0ai API Key
-    api_key: m0-T5IC5pby1Z0ZQpqbNi7gz9IvkrdxDqxZCNgSdJ0g
+    api_key: xx
     # DeepSeek API Key，用于 Mem0ai 内部 LLM
-    deepseek_api_key: sk-01568d3c6e8949d18f76fc37a51344ed
+    deepseek_api_key: sk-xx
+    # OpenAI API Key，用于 Mem0ai 内部 Embedder
+    openai_api_key: sk-xxx  # 请替换为你的 OpenAI API Key
     # 批量保存配置
     batch_size: 5
 ```
@@ -42,17 +44,20 @@ LLM:
 ## 工作原理
 
 1. **Mem0ai 内部 LLM**: Mem0ai 使用 DeepSeek Chat 进行记忆处理和检索
-2. **主系统 LLM**: 主对话系统也使用 DeepSeek Chat
-3. **统一模型**: 确保整个系统使用相同的 LLM 模型，提供一致的用户体验
+2. **Mem0ai 内部 Embedder**: Mem0ai 使用 OpenAI text-embedding-3-small 进行文本向量化
+3. **主系统 LLM**: 主对话系统也使用 DeepSeek Chat
+4. **统一模型**: 确保整个系统使用相同的 LLM 模型，提供一致的用户体验
 
 ## 优势
 
 - **模型一致性**: 记忆处理和主对话使用相同的 LLM
+- **高质量嵌入**: 使用 OpenAI text-embedding-3-small 提供更准确的语义搜索
 - **性能优化**: 利用 DeepSeek 的高性能模型
 - **批量保存**: 减少 API 调用频率，提升对话速度
 
 ## 注意事项
 
 - 确保 DeepSeek API Key 有效且有足够的配额
+- 确保 OpenAI API Key 有效且有足够的配额（用于文本嵌入）
 - 批量保存功能可以减少 API 调用，但可能影响记忆的实时性
 - 建议在生产环境中使用环境变量来管理 API Key
