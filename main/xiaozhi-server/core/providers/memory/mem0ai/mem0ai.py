@@ -17,7 +17,7 @@ class MemoryProvider(MemoryProviderBase):
         self.api_version = config.get("api_version", "v1.1")
         
         # 批量保存配置
-        self.batch_size = config.get("batch_size", 1)  # 默认每轮都保存
+        self.batch_size = config.get("batch_size", 5)  # 默认每轮都保存
         self.pending_messages = deque()  # 待保存的消息队列
         self.last_save_time = 0  # 上次保存时间
         
@@ -30,8 +30,19 @@ class MemoryProvider(MemoryProviderBase):
             self.use_mem0 = True
 
         try:
-            self.client = MemoryClient(api_key=self.api_key)
-            logger.bind(tag=TAG).info(f"成功连接到 Mem0ai 服务，批量保存阈值: {self.batch_size} 轮对话")
+            # 配置 Mem0ai 使用 DeepSeek 作为内部 LLM
+            mem0_config = {
+                "llm": {
+                    "provider": "deepseek",
+                    "config": {
+                        "model": "deepseek-chat",
+                        "api_key": config.get("deepseek_api_key", "sk-27df0a24e6ab4c28aada3a1f04ce923b")  # 从配置中获取 DeepSeek API Key
+                    }
+                }
+            }
+            
+            self.client = MemoryClient(api_key=self.api_key, config=mem0_config)
+            logger.bind(tag=TAG).info(f"成功连接到 Mem0ai 服务，使用 {mem0_config["llm"]["config"]["model"]} 作为内部 LLM，批量保存阈值: {self.batch_size} 轮对话")
         except Exception as e:
             logger.bind(tag=TAG).error(f"连接到 Mem0ai 服务时发生错误: {str(e)}")
             logger.bind(tag=TAG).error(f"详细错误: {traceback.format_exc()}")

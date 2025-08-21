@@ -104,6 +104,7 @@ wakeup_words:
   - "喵喵同学"
   - "小滨小滨"
   - "小冰小冰"
+  - "你好小王子"
 # MCP接入点地址，地址格式为：ws://你的mcp接入点ip或者域名:端口号/mcp/?token=你的token
 # 详细教程 https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/docs/mcp-endpoint-integration.md
 mcp_endpoint: 你的接入点 websocket地址
@@ -181,13 +182,13 @@ selected_module:
   # 语音识别模块，默认使用FunASR本地模型
   ASR: FunASR
   # 将根据配置名称对应的type调用实际的LLM适配器
-  LLM: ChatGLMLLM
+  LLM: DeepSeekLLM
   # 视觉语言大模型
   VLLM: ChatGLMVLLM
   # TTS将根据配置名称对应的type调用实际的TTS适配器
   TTS: EdgeTTS
   # 记忆模块，默认不开启记忆；如果想使用超长记忆，推荐使用mem0ai；如果注重隐私，请使用本地的mem_local_short
-  Memory: nomem
+  Memory: mem0ai
   # 意图识别模块开启后，可以播放音乐、控制音量、识别退出指令。
   # 不想开通意图识别，就设置成：nointent
   # 意图识别可使用intent_llm。优点：通用性强，缺点：增加串行前置意图识别模块，会增加处理时间，支持控制音量大小等iot操作
@@ -238,7 +239,9 @@ Memory:
     type: mem0ai
     # https://app.mem0.ai/dashboard/api-keys
     # 每月有1000次免费调用
-    api_key: 你的mem0ai api key
+    api_key: m0-T5IC5pby1Z0ZQpqbNi7gz9IvkrdxDqxZCNgSdJ0g
+    # DeepSeek API Key，用于 Mem0ai 内部 LLM
+    deepseek_api_key: sk-01568d3c6e8949d18f76fc37a51344ed
     # 批量保存配置：设置对话轮数阈值，达到阈值时才保存到 mem0ai
     # 设置为 1：每轮对话都保存（默认行为，API调用频繁）
     # 设置为 5：每5轮对话保存一次（推荐，平衡性能和记忆效果）
@@ -448,7 +451,7 @@ LLM:
     # 可在这里找到你的api key https://platform.deepseek.com/
     model_name: deepseek-chat
     url: https://api.deepseek.com
-    api_key: 你的deepseek web key
+    api_key: sk-01568d3c6e8949d18f76fc37a51344ed
   ChatGLMLLM:
     # 定义LLM API类型
     type: openai
